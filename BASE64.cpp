@@ -2,7 +2,6 @@
 #include "BASE64.h"
 
 using namespace std;
-//возвращает байт одного символв входной строки.
 string line_of_bytes(unsigned int ascii){
     string result_1;
     for (int j = 0; j < 8; ++j) {
@@ -16,23 +15,23 @@ string line_of_bytes(unsigned int ascii){
 string Encoding(string line){
     const string Base64Table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
     string outline;
-    string bytes;//строка байт всех символов входной строки
+    string bytes;
     unsigned int sizeofbytes;
-    unsigned int sizeofline;//размер входной строки
-    unsigned char symbol;//символ введенной строки
-    unsigned int ascii;//номер символа введенной строки в кодировке ASCII
-    unsigned int index;//номер символа в таблице BASE64
+    unsigned int sizeofline;
+    unsigned char symbol;
+    unsigned int ascii;
+    unsigned int index;
     int res[1000];
     int i(0);
     int count(0);
-    //считываем байты символов входной строки
+
     sizeofline = size(line);
     while (i < sizeofline) {
         symbol = line[i];
         ascii = int(symbol);
         i++;
         bytes += line_of_bytes(ascii);}
-    //дописываем нужные нули, если количество бит не кратно 6
+
     sizeofbytes = size(bytes);
     if (sizeofline % 3 != 0) {
         for(int j(0); j<(6-sizeofbytes%6);j++){
@@ -72,15 +71,15 @@ string line_of_bytes_2(unsigned int base_64){
 string Decoding(string line){
     const string Base64Table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
     string outline;
-    string bytes;//строка байт всех символов входной строки
+    string bytes;
     unsigned int sizeofbytes;
-    unsigned int sizeofline;//размер входной строки
-    unsigned int base_64;//номер символа введенной строки в кодировке BASE64
-    unsigned int index;//номер символа в таблице BASE64
+    unsigned int sizeofline;
+    unsigned int base_64;
+    unsigned int index;
     int res[1000];
     int i(0);
     int count(0);
-    //считываем байты символов входной строки
+
     sizeofline = size(line);
     while (i < sizeofline && line[i] != '=') {
         int j(0);
@@ -91,7 +90,7 @@ string Decoding(string line){
         i++;
         bytes += line_of_bytes_2(base_64);
     }
-    //убираем лишние нули
+
     sizeofbytes = size(bytes);
     if (line[sizeofline-1] != '=' && sizeofline%4 !=0){
         sizeofbytes= sizeofbytes - (8 - sizeofbytes%8);
